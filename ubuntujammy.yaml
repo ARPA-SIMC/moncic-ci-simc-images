@@ -1,0 +1,7 @@
+distro: jammy
+maintscript: |
+    set -uxe
+    sed -i -re 's/main$/main universe/' /etc/apt/sources.list
+    echo "deb [trusted=yes] https://simc.arpae.it/packages/debian jammy main" > /etc/apt/sources.list.d/arpae-simc.list
+    apt-get update
+    apt-get -y install build-essential dpkg-dev fakeroot git eatmydata iproute2 git-buildpackage

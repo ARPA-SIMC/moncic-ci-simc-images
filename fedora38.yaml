@@ -1,0 +1,12 @@
+distro: fedora38
+maintscript: |
+    set -uxe
+    /usr/bin/systemctl disable systemd-resolved --now
+    /usr/bin/sed -i '/^tsflags=/d' /etc/dnf/dnf.conf
+    /usr/bin/dnf install -q -y --allowerasing @buildsys-build
+    /usr/bin/dnf install -q -y "dnf-command(builddep)"
+    /usr/bin/dnf install -q -y git vim-enhanced
+    /usr/bin/dnf install -q -y rpmdevtools
+    /usr/bin/dnf copr enable -y simc/stable
+    /usr/bin/dnf upgrade -q -y
+    /usr/bin/dnf clean all -q -y

@@ -1,0 +1,13 @@
+distro: centos7
+maintscript: |
+    set -uxe
+    /usr/bin/sed -i '/^tsflags=/d' /etc/yum.conf
+    /usr/bin/yum install -y epel-release
+    /usr/bin/yum install -y @buildsys-build
+    /usr/bin/yum install -y yum-utils
+    /usr/bin/yum install -y git vim-enhanced
+    /usr/bin/yum install -y rpmdevtools
+    /usr/bin/yum install -q -y yum-plugin-copr
+    /usr/bin/yum copr enable -q -y simc/stable epel-7
+    /usr/bin/yum upgrade -q -y
+    /usr/bin/yum clean all -q -y

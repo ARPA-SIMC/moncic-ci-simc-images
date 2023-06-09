@@ -1,0 +1,12 @@
+distro: fedora36
+maintscript: |
+    set -uxe
+    /usr/bin/systemctl disable systemd-resolved --now
+    /usr/bin/sed -i '/^tsflags=/d' /etc/dnf/dnf.conf
+    /usr/bin/dnf install -q -y --allowerasing @buildsys-build
+    /usr/bin/dnf install -q -y "dnf-command(builddep)"
+    /usr/bin/dnf install -q -y git vim-enhanced
+    /usr/bin/dnf install -q -y rpmdevtools
+    echo -e '[arpae-simc]\nname=Arpae-SIMC $releasever - $basearch\nbaseurl=https://simc.arpae.it/packages/fedora/$releasever/sim/$basearch/rpms/\nenabled=1\ngpgcheck=0' > /etc/yum.repos.d/arpae-simc.repo
+    /usr/bin/dnf upgrade -q -y
+    /usr/bin/dnf clean all -q -y

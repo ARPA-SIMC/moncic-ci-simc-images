@@ -1,0 +1,15 @@
+distro: rocky8
+maintscript: |
+    set -uxe
+    /usr/bin/sed -i '/^tsflags=/d' /etc/dnf/dnf.conf
+    /usr/bin/dnf install -q -y --releasever 8 /etc/os-release
+    /usr/bin/dnf install -q -y epel-release
+    /usr/bin/dnf install -q -y "dnf-command(config-manager)"
+    /usr/bin/dnf config-manager --set-enabled powertools
+    /usr/bin/dnf groupinstall -q -y "Development Tools"
+    /usr/bin/dnf install -q -y "dnf-command(builddep)"
+    /usr/bin/dnf install -q -y git vim-enhanced
+    /usr/bin/dnf install -q -y rpmdevtools
+    /usr/bin/dnf copr enable -y simc/stable
+    /usr/bin/dnf upgrade -q -y
+    /usr/bin/dnf clean all -q -y
