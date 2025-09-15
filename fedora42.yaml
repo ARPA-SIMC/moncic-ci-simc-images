@@ -5,6 +5,7 @@ maintscript: |
     /usr/bin/sed -i '/^tsflags=/d' /etc/dnf/dnf.conf
     /usr/bin/dnf install -q -y --allowerasing @buildsys-build
     /usr/bin/dnf install -q -y "dnf-command(builddep)"
+    /usr/bin/dnf install -q -y "dnf-command(copr)"
     /usr/bin/dnf install -q -y git vim-enhanced
     /usr/bin/dnf install -q -y rpmdevtools
     /usr/bin/dnf copr enable -y simc/stable
