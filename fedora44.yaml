@@ -3,6 +3,12 @@ maintscript: |
     set -uxe
     /usr/bin/systemctl disable systemd-resolved --now
     /usr/bin/sed -i '/^tsflags=/d' /etc/dnf/dnf.conf
+    echo '[simc-pub]' > /etc/yum.repos.d/sim-pub.repo
+    echo 'name=SIMC public $releasever - $basearch' >> /etc/yum.repos.d/sim-pub.repo
+    echo 'baseurl=https://simc.arpae.it/packages/fedora/$releasever/sim/$basearch/rpms/' >> /etc/yum.repos.d/sim-pub.repo
+    echo 'enabled=1' >> /etc/yum.repos.d/sim-pub.repo
+    echo 'gpgcheck=0' >> /etc/yum.repos.d/sim-pub.repo
+    echo 'metadata_expire=12h' >> /etc/yum.repos.d/sim-pub.repo
     /usr/bin/dnf install -q -y --allowerasing @buildsys-build
     /usr/bin/dnf install -q -y "dnf-command(builddep)"
     /usr/bin/dnf install -q -y "dnf-command(copr)"
